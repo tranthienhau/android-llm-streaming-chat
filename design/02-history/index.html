@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>AI Assistant - History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#4029ba",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#1a1a28",
+                    "surface-dim": "#dad9e7",
+                    "on-background": "#1a1b25",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "surface": "#fbf8ff",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#c6bfff",
+                    "on-secondary": "#ffffff",
+                    "assistant-bubble": "#F1F2F7",
+                    "surface-container": "#eeecfb",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "secondary-fixed-dim": "#c6c5d8",
+                    "primary-fixed-dim": "#c6bfff",
+                    "on-secondary-fixed-variant": "#454555",
+                    "tertiary": "#884800",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed": "#160066",
+                    "outline-variant": "#c8c4d7",
+                    "primary": "#5341cd",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e8e7f5",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-alt": "#F6F7FB",
+                    "on-primary-container": "#faf6ff",
+                    "on-surface-variant": "#474554",
+                    "text-secondary": "#6B6E80",
+                    "surface-bright": "#fbf8ff",
+                    "on-tertiary-fixed": "#2f1500",
+                    "surface-tint": "#5847d2",
+                    "surface-variant": "#e2e1ef",
+                    "success": "#22C55E",
+                    "secondary": "#5d5d6d",
+                    "inverse-on-surface": "#f1effe",
+                    "primary-fixed": "#e4dfff",
+                    "secondary-fixed": "#e2e0f4",
+                    "surface-container-low": "#f4f2ff",
+                    "background": "#fbf8ff",
+                    "outline": "#787586",
+                    "inverse-surface": "#2f303a",
+                    "surface-container-highest": "#e2e1ef",
+                    "secondary-container": "#e2e0f4",
+                    "tertiary-container": "#ac5d00",
+                    "on-surface": "#1a1b25",
+                    "tertiary-fixed": "#ffdcc3",
+                    "on-tertiary-container": "#fff5f1",
+                    "primary-container": "#6c5ce7",
+                    "on-secondary-container": "#636374"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "screen-padding": "20px",
+                    "stack-gap": "16px",
+                    "bubble-gap": "12px",
+                    "unit": "8px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "title-md": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "title-md": ["17px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        .glass-header {
+            backdrop-filter: blur(10px);
+            background: rgba(251, 248, 255, 0.8);
+        }
+        .custom-shadow {
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-50 glass-header flex justify-between items-center px-screen-padding h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-low transition-colors rounded-full active:scale-95 transition-transform" data-icon="menu">menu</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Chats</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden custom-shadow border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a young woman with a friendly expression, wearing a minimalist neutral blazer. The lighting is soft and high-key, reflecting a modern light-mode interface aesthetic. The background is a clean, blurred office space with subtle hints of vivid violet accents, maintaining a cohesive look with a premium AI assistant brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD73T23_a2hwT-y4TYoJTSO-4KE5g6aB8kB7Gjvw1cYJZeVoFwBBN60od_-X42Bknghb6VhnKsnVKsdTFp8W4eUuPD3xUjnViRS1Ot4N2c1HHIzuxxIMTQUZb8psEwed4WrDbN-laBZDG75hVnppuFL92MNAHLwhBJ-wMPF6p7XDrEy6wNy4hs6gGvANKLznp6EPJqamT5ywRuxrC3jrNWhWqil7l6n2fCM2GLBjo6ZhOcjJAbrL1w0eRBSHRGGDdRQc1wCApr49JU"/>
+</div>
+</header>
+<main class="px-screen-padding mt-4 max-w-2xl mx-auto">
+<!-- Search Bar -->
+<div class="relative mb-6">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary" data-icon="search">search</span>
+<input class="w-full bg-surface-alt border-none rounded-[28px] py-3.5 pl-12 pr-4 text-body-md focus:ring-2 focus:ring-primary-container transition-all custom-shadow" placeholder="Search chats..." type="text"/>
+</div>
+<!-- Conversation History List -->
+<div class="flex flex-col gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-alt p-5 rounded-[20px] hover:bg-surface-container transition-colors cursor-pointer group relative active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors pr-16">Kotlin coroutines help</h3>
+<span class="font-label-sm text-label-sm text-text-secondary whitespace-nowrap">2h ago</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary line-clamp-2 mb-4">
+                    The best way to handle structured concurrency in your Android application is by using lifecycleScope or viewModelScope...
+                </p>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label-sm text-[11px] font-bold">GPT-4o</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-alt p-5 rounded-[20px] hover:bg-surface-container transition-colors cursor-pointer group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors pr-16">Trip to Kyoto</h3>
+<span class="font-label-sm text-label-sm text-text-secondary whitespace-nowrap">Yesterday</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary line-clamp-2 mb-4">
+                    For your 5-day itinerary, I recommend visiting the Fushimi Inari Shrine early in the morning to avoid the tourist crowds...
+                </p>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label-sm text-[11px] font-bold">Claude</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-alt p-5 rounded-[20px] hover:bg-surface-container transition-colors cursor-pointer group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors pr-16">Summarize research paper</h3>
+<span class="font-label-sm text-label-sm text-text-secondary whitespace-nowrap">2 days ago</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary line-clamp-2 mb-4">
+                    The primary findings of the paper indicate a significant correlation between transformer architecture scaling and zero-shot performance...
+                </p>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label-sm text-[11px] font-bold">GPT-4o</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-alt p-5 rounded-[20px] hover:bg-surface-container transition-colors cursor-pointer group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors pr-16">Workout routine planning</h3>
+<span class="font-label-sm text-label-sm text-text-secondary whitespace-nowrap">3 days ago</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary line-clamp-2 mb-4">
+                    Based on your preference for high-intensity training, I've drafted a 4-day split focusing on compound movements...
+                </p>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label-sm text-[11px] font-bold">Claude</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-alt p-5 rounded-[20px] hover:bg-surface-container transition-colors cursor-pointer group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors pr-16">Recipe for mushroom risotto</h3>
+<span class="font-label-sm text-label-sm text-text-secondary whitespace-nowrap">Mon</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary line-clamp-2 mb-4">
+                    The secret to a creamy risotto is adding the warm broth one ladle at a time and stirring constantly to release the starches...
+                </p>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label-sm text-[11px] font-bold">GPT-4o</span>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface-alt p-5 rounded-[20px] hover:bg-surface-container transition-colors cursor-pointer group active:scale-[0.98] transition-transform">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors pr-16">Explain quantum entanglement</h3>
+<span class="font-label-sm text-label-sm text-text-secondary whitespace-nowrap">Last week</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary line-clamp-2 mb-4">
+                    Think of entanglement as two magic coins. When you flip one and get heads, the other coin instantly becomes tails, no matter...
+                </p>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label-sm text-[11px] font-bold">Claude</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-white rounded-full flex items-center justify-center custom-shadow hover:opacity-90 active:scale-90 transition-all z-40">
+<span class="material-symbols-outlined text-[32px]" data-icon="add">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 safe-bottom bg-surface h-[80px] shadow-[0_-2px_12px_0_rgba(0,0,0,0.06)]">
+<a class="flex flex-col items-center justify-center text-text-secondary hover:opacity-80 transition-opacity active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold hover:opacity-80 transition-opacity active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="history" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-sm text-label-sm">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-text-secondary hover:opacity-80 transition-opacity active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.bg-surface-alt').forEach(card => {
+            card.addEventListener('click', () => {
+                console.log('Conversation card clicked');
+            });
+        });
+    </script>
+</body></html>

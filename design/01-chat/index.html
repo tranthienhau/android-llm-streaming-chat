@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>AI Assistant - Chat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#2f303a",
+                    "success": "#22C55E",
+                    "on-error-container": "#93000a",
+                    "assistant-bubble": "#F1F2F7",
+                    "text-secondary": "#6B6E80",
+                    "surface-container-highest": "#e2e1ef",
+                    "on-surface-variant": "#474554",
+                    "on-secondary-fixed-variant": "#454555",
+                    "background": "#fbf8ff",
+                    "inverse-primary": "#c6bfff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f1effe",
+                    "surface-container-high": "#e8e7f5",
+                    "surface-alt": "#F6F7FB",
+                    "on-surface": "#1a1b25",
+                    "on-secondary-fixed": "#1a1a28",
+                    "tertiary-fixed": "#ffdcc3",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "on-primary-fixed-variant": "#4029ba",
+                    "outline": "#787586",
+                    "tertiary": "#884800",
+                    "surface-tint": "#5847d2",
+                    "surface-dim": "#dad9e7",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "on-tertiary-container": "#fff5f1",
+                    "on-secondary-container": "#636374",
+                    "secondary": "#5d5d6d",
+                    "surface-bright": "#fbf8ff",
+                    "outline-variant": "#c8c4d7",
+                    "primary-fixed-dim": "#c6bfff",
+                    "on-background": "#1a1b25",
+                    "primary-fixed": "#e4dfff",
+                    "secondary-container": "#e2e0f4",
+                    "primary-container": "#6c5ce7",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#160066",
+                    "tertiary-container": "#ac5d00",
+                    "surface-variant": "#e2e1ef",
+                    "on-primary-container": "#faf6ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#2f1500",
+                    "surface-container-low": "#f4f2ff",
+                    "surface": "#fbf8ff",
+                    "primary": "#5341cd",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#e2e0f4",
+                    "secondary-fixed-dim": "#c6c5d8",
+                    "surface-container": "#eeecfb",
+                    "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "stack-gap": "16px",
+                    "screen-padding": "20px",
+                    "bubble-gap": "12px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "title-md": ["17px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .chat-container { height: calc(100vh - 144px); overflow-y: auto; scroll-behavior: smooth; }
+        .typing-dot { animation: typing 1.4s infinite both; width: 4px; height: 4px; border-radius: 50%; background-color: currentColor; display: inline-block; margin: 0 1px; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 80%, 100% { opacity: 0; } 40% { opacity: 1; } }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .shadow-ambient { shadow-sm: 0 2px 12px 0px rgba(0,0,0,0.06); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface">
+<!-- Top AppBar -->
+<header class="bg-background w-full top-0 sticky z-50 flex justify-between items-center px-screen-padding h-16 w-full shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="smart_toy">smart_toy</span>
+<div class="flex items-center gap-1.5">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Claude Sonnet</h1>
+<div class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></div>
+</div>
+</div>
+<button class="hover:opacity-80 transition-opacity duration-200">
+<span class="material-symbols-outlined text-text-secondary" data-icon="circle">circle</span>
+</button>
+</header>
+<!-- Main Canvas: Chat Stream -->
+<main class="chat-container px-screen-padding pt-4 pb-24 space-y-stack-gap" id="chat-stream">
+<!-- User Message -->
+<div class="flex justify-end">
+<div class="max-w-[80%] bg-primary text-on-primary p-4 rounded-[20px] rounded-tr-none shadow-[0_2px_12px_0px_rgba(0,0,0,0.06)]">
+<p class="font-body-md text-body-md">Can you explain how Server-Sent Events (SSE) work for streaming AI responses?</p>
+</div>
+</div>
+<!-- Assistant Message -->
+<div class="flex justify-start">
+<div class="max-w-[85%] bg-assistant-bubble text-on-surface p-4 rounded-[20px] rounded-tl-none">
+<p class="font-body-md text-body-md leading-relaxed">
+                    Server-Sent Events (SSE) is a web technology that allows a server to push real-time updates to a web page over a single HTTP connection. In the context of AI assistants like me, it's used to "stream" tokens as they are generated.
+                </p>
+<div class="mt-3 p-3 bg-surface-container-lowest rounded-xl font-mono text-[13px] text-on-surface-variant border border-outline-variant/30">
+                    data: {"text": "Hello"}<br/>
+                    data: {"text": " world"}<br/>
+                    data: {"text": "!"}
+                </div>
+</div>
+</div>
+<!-- User Message 2 -->
+<div class="flex justify-end">
+<div class="max-w-[80%] bg-primary text-on-primary p-4 rounded-[20px] rounded-tr-none shadow-[0_2px_12px_0px_rgba(0,0,0,0.06)]">
+<p class="font-body-md text-body-md">What are the main benefits compared to WebSockets?</p>
+</div>
+</div>
+<!-- Assistant Message 2 (Streaming State) -->
+<div class="flex justify-start">
+<div class="max-w-[85%] bg-assistant-bubble text-on-surface p-4 rounded-[20px] rounded-tl-none">
+<div class="font-body-md text-body-md leading-relaxed" id="streaming-content">
+                    SSE is often preferred for streaming LLM responses because it's unidirectional—the server sends data to the client, which is exactly what's needed for text generation. 
+                    <br/><br/>
+                    Key advantages include:<br/>
+                    1. <strong>Lightweight:</strong> Uses standard HTTP instead of a custom protocol.<br/>
+                    2. <strong>Auto-reconnect:</strong> Browsers handle reconnections natively.<br/>
+                    3. <strong>Firewall friendly:</strong> It works over standard port 80/443 without issues.
+                    <br/><br/>
+                    Currently, I'm using an EventSource interface to send these bits of information 
+                    <span class="inline-flex items-center ml-1">
+<span class="typing-dot"></span>
+<span class="typing-dot"></span>
+<span class="typing-dot"></span>
+</span>
+</div>
+</div>
+</div>
+<!-- Spacer for input bar -->
+<div class="h-12"></div>
+</main>
+<!-- Contextual Input Bar -->
+<div class="fixed bottom-20 left-0 w-full px-screen-padding pb-4 bg-transparent z-40">
+<div class="flex items-center gap-3 bg-surface-alt p-2 pl-5 pr-2 rounded-[28px] shadow-[0_2px_12px_0px_rgba(0,0,0,0.06)] border border-outline-variant/10">
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder:text-text-secondary" placeholder="Type your message..." type="text"/>
+<button class="bg-primary w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-150 active:scale-95 shadow-md">
+<!-- STOP ICON (Streaming State) -->
+<span class="material-symbols-outlined text-on-primary text-[20px]" data-icon="stop" style="font-variation-settings: 'FILL' 1;">stop</span>
+</button>
+</div>
+</div>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-surface-container-lowest dark:bg-inverse-surface shadow-[0_-2px_12px_0px_rgba(0,0,0,0.06)] rounded-t-xl">
+<!-- Chat Tab (Active) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold hover:bg-surface-alt dark:hover:bg-surface-container-high transition-colors px-6 py-2 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="chat_bubble" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-sm text-label-sm-mobile">Chat</span>
+</a>
+<!-- History Tab -->
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-outline hover:bg-surface-alt dark:hover:bg-surface-container-high transition-colors px-6 py-2 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="history">history</span>
+<span class="font-label-sm text-label-sm-mobile">History</span>
+</a>
+<!-- Settings Tab -->
+<a class="flex flex-col items-center justify-center text-text-secondary dark:text-outline hover:bg-surface-alt dark:hover:bg-surface-container-high transition-colors px-6 py-2 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm-mobile">Settings</span>
+</a>
+</nav>
+<script>
+        // Auto-scroll to bottom on load
+        window.addEventListener('load', () => {
+            const container = document.getElementById('chat-stream');
+            container.scrollTop = container.scrollHeight;
+        });
+
+        // Simple interaction for the Stop button
+        const stopBtn = document.querySelector('button .material-symbols-outlined[data-icon="stop"]').parentElement;
+        stopBtn.addEventListener('click', () => {
+            // Visual feedback
+            stopBtn.classList.add('bg-error');
+            setTimeout(() => {
+                stopBtn.classList.remove('bg-error');
+            }, 500);
+        });
+    </script>
+</body></html>

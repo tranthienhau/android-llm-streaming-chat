@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>AI Assistant - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- UI Designer's Internal Logic & Theme Mapping -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#884800",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#5847d2",
+                    "tertiary-container": "#ac5d00",
+                    "inverse-surface": "#2f303a",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "on-surface": "#1a1b25",
+                    "surface-variant": "#e2e1ef",
+                    "on-tertiary-fixed": "#2f1500",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#454555",
+                    "on-secondary-fixed": "#1a1a28",
+                    "secondary-fixed": "#e2e0f4",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#160066",
+                    "secondary-fixed-dim": "#c6c5d8",
+                    "assistant-bubble": "#F1F2F7",
+                    "on-secondary": "#ffffff",
+                    "surface-alt": "#F6F7FB",
+                    "primary-container": "#6c5ce7",
+                    "surface-container-high": "#e8e7f5",
+                    "surface-dim": "#dad9e7",
+                    "primary-fixed-dim": "#c6bfff",
+                    "background": "#fbf8ff",
+                    "primary-fixed": "#e4dfff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#636374",
+                    "secondary": "#5d5d6d",
+                    "outline": "#787586",
+                    "on-primary": "#ffffff",
+                    "text-secondary": "#6B6E80",
+                    "success": "#22C55E",
+                    "on-primary-container": "#faf6ff",
+                    "inverse-primary": "#c6bfff",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "on-surface-variant": "#474554",
+                    "surface-container-low": "#f4f2ff",
+                    "surface-container": "#eeecfb",
+                    "on-tertiary-container": "#fff5f1",
+                    "secondary-container": "#e2e0f4",
+                    "outline-variant": "#c8c4d7",
+                    "surface-container-highest": "#e2e1ef",
+                    "on-background": "#1a1b25",
+                    "tertiary-fixed": "#ffdcc3",
+                    "surface-bright": "#fbf8ff",
+                    "inverse-on-surface": "#f1effe",
+                    "surface": "#fbf8ff",
+                    "primary": "#5341cd",
+                    "on-primary-fixed-variant": "#4029ba"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-gap": "16px",
+                    "bubble-gap": "12px",
+                    "unit": "8px",
+                    "screen-padding": "20px"
+            },
+            "fontFamily": {
+                    "title-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "title-md": ["17px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "label-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .segmented-control-active {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .custom-shadow {
+            box-shadow: 0 2px 12px 0px rgba(0,0,0,0.06);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="bg-background fixed top-0 w-full z-50 flex justify-between items-center px-screen-padding h-16 transition-opacity duration-200">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="settings">settings</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Settings</h1>
+</div>
+<div class="flex items-center">
+<button class="p-2 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-primary" data-icon="circle">circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-20 pb-32 px-screen-padding max-w-md mx-auto w-full space-y-stack-gap">
+<!-- Connection Group -->
+<section class="space-y-3">
+<h2 class="text-text-secondary font-label-sm text-label-sm-mobile ml-1">CONNECTION</h2>
+<div class="bg-surface-alt rounded-[20px] p-1 space-y-1">
+<div class="p-4 space-y-1">
+<label class="text-xs font-semibold text-outline uppercase tracking-wider">API Endpoint</label>
+<input class="w-full bg-transparent border-none focus:ring-0 p-0 font-body-md text-body-md text-on-surface" placeholder="Enter endpoint URL" type="text" value="https://api.anthropic.com/v1"/>
+</div>
+<div class="h-[1px] bg-outline-variant/30 mx-4"></div>
+<div class="p-4 flex items-center justify-between">
+<div class="space-y-1 flex-grow">
+<label class="text-xs font-semibold text-outline uppercase tracking-wider">API Key</label>
+<div class="flex items-center">
+<input class="bg-transparent border-none focus:ring-0 p-0 font-body-md text-body-md text-on-surface flex-grow" id="apiKeyInput" type="password" value="••••••••••••••••"/>
+</div>
+</div>
+<button class="p-2 text-text-secondary hover:text-primary transition-colors" onclick="toggleVisibility()">
+<span class="material-symbols-outlined" data-icon="visibility" id="visibilityIcon">visibility</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Model Group -->
+<section class="space-y-3">
+<h2 class="text-text-secondary font-label-sm text-label-sm-mobile ml-1">MODEL</h2>
+<div class="bg-surface-alt rounded-[20px] p-4 space-y-4">
+<!-- Segmented Control -->
+<div class="flex bg-surface-container-highest p-1 rounded-xl">
+<button class="flex-1 py-2 text-label-sm-mobile font-semibold rounded-lg transition-all text-text-secondary" onclick="setProvider('openai', this)">OpenAI</button>
+<button class="flex-1 py-2 text-label-sm-mobile font-semibold rounded-lg transition-all bg-primary-container text-on-primary-container segmented-control-active" onclick="setProvider('anthropic', this)">Anthropic</button>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-body-md text-body-md text-on-surface">Selected Model</span>
+<div class="flex items-center gap-1 text-primary font-semibold">
+<span class="font-body-md text-body-md">Claude Sonnet</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Appearance Group -->
+<section class="space-y-3">
+<h2 class="text-text-secondary font-label-sm text-label-sm-mobile ml-1">APPEARANCE</h2>
+<div class="bg-surface-alt rounded-[20px] p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary" data-icon="dark_mode">dark_mode</span>
+<span class="font-body-md text-body-md text-on-surface">Dark Mode</span>
+</div>
+<!-- Toggle Switch -->
+<button class="w-12 h-6 rounded-full bg-outline-variant relative transition-colors duration-300" id="darkModeToggle" onclick="toggleDarkMode()">
+<div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-300 transform translate-x-0" id="toggleThumb"></div>
+</button>
+</div>
+</section>
+<!-- About Group -->
+<section class="space-y-3">
+<h2 class="text-text-secondary font-label-sm text-label-sm-mobile ml-1">ABOUT</h2>
+<div class="bg-surface-alt rounded-[20px] p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary" data-icon="info">info</span>
+<span class="font-body-md text-body-md text-on-surface">Version</span>
+</div>
+<span class="font-body-md text-body-md text-text-secondary">v1.0.0</span>
+</div>
+</section>
+<!-- Save Button -->
+<div class="pt-6">
+<button class="w-full bg-primary text-on-primary py-4 rounded-full font-title-md text-title-md-mobile custom-shadow hover:opacity-90 active:scale-95 transition-all">
+                Save Changes
+            </button>
+</div>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-surface-container-lowest shadow-[0_-2px_12px_0px_rgba(0,0,0,0.06)] rounded-t-xl">
+<!-- Chat Tab -->
+<a class="flex flex-col items-center justify-center text-text-secondary hover:bg-surface-alt transition-colors w-20 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm-mobile mt-1">Chat</span>
+</a>
+<!-- History Tab -->
+<a class="flex flex-col items-center justify-center text-text-secondary hover:bg-surface-alt transition-colors w-20 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-sm text-label-sm-mobile mt-1">History</span>
+</a>
+<!-- Settings Tab (Active) -->
+<a class="flex flex-col items-center justify-center text-primary font-bold transition-transform duration-150 w-20 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-sm text-label-sm-mobile mt-1">Settings</span>
+</a>
+</nav>
+<script>
+        function toggleVisibility() {
+            const input = document.getElementById('apiKeyInput');
+            const icon = document.getElementById('visibilityIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        }
+
+        function setProvider(provider, btn) {
+            const buttons = btn.parentElement.querySelectorAll('button');
+            buttons.forEach(b => {
+                b.classList.remove('bg-primary-container', 'text-on-primary-container', 'segmented-control-active');
+                b.classList.add('text-text-secondary');
+            });
+            btn.classList.remove('text-text-secondary');
+            btn.classList.add('bg-primary-container', 'text-on-primary-container', 'segmented-control-active');
+        }
+
+        let isDark = false;
+        function toggleDarkMode() {
+            isDark = !isDark;
+            const toggle = document.getElementById('darkModeToggle');
+            const thumb = document.getElementById('toggleThumb');
+            const html = document.documentElement;
+            
+            if (isDark) {
+                toggle.classList.remove('bg-outline-variant');
+                toggle.classList.add('bg-primary');
+                thumb.style.transform = 'translateX(24px)';
+                // Note: Simplified visual toggle for demo, full dark mode logic would swap theme classes
+                // html.classList.add('dark'); 
+            } else {
+                toggle.classList.remove('bg-primary');
+                toggle.classList.add('bg-outline-variant');
+                thumb.style.transform = 'translateX(0)';
+                // html.classList.remove('dark');
+            }
+        }
+    </script>
+</body></html>

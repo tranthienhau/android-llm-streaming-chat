@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>AI Assistant - New Chat</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Inter Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#ffdcc3",
+                    "on-background": "#1a1b25",
+                    "surface": "#fbf8ff",
+                    "on-surface-variant": "#474554",
+                    "error-container": "#ffdad6",
+                    "assistant-bubble": "#F1F2F7",
+                    "surface-alt": "#F6F7FB",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#c6bfff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f4f2ff",
+                    "on-primary-container": "#faf6ff",
+                    "surface-variant": "#e2e1ef",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#636374",
+                    "secondary-fixed": "#e2e0f4",
+                    "on-primary-fixed": "#160066",
+                    "surface-container-highest": "#e2e1ef",
+                    "outline": "#787586",
+                    "outline-variant": "#c8c4d7",
+                    "inverse-primary": "#c6bfff",
+                    "surface-container-high": "#e8e7f5",
+                    "success": "#22C55E",
+                    "primary-fixed": "#e4dfff",
+                    "inverse-surface": "#2f303a",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "tertiary": "#884800",
+                    "surface-bright": "#fbf8ff",
+                    "on-secondary-fixed": "#1a1a28",
+                    "surface-tint": "#5847d2",
+                    "primary": "#5341cd",
+                    "text-secondary": "#6B6E80",
+                    "background": "#fbf8ff",
+                    "on-tertiary-fixed": "#2f1500",
+                    "surface-dim": "#dad9e7",
+                    "secondary": "#5d5d6d",
+                    "on-surface": "#1a1b25",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "surface-container": "#eeecfb",
+                    "secondary-container": "#e2e0f4",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#4029ba",
+                    "primary-container": "#6c5ce7",
+                    "on-secondary-fixed-variant": "#454555",
+                    "on-tertiary-container": "#fff5f1",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#c6c5d8",
+                    "tertiary-container": "#ac5d00",
+                    "inverse-on-surface": "#f1effe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "bubble-gap": "12px",
+                    "unit": "8px",
+                    "stack-gap": "16px",
+                    "screen-padding": "20px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "title-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "title-md": ["17px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-md": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "label-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Inter', sans-serif;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .safe-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      /* Custom shadow for modern tactile look */
+      .ambient-shadow {
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+      }
+      /* Hide scrollbar for clean UI */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar (Based on Shared Components JSON) -->
+<header class="flex items-center justify-between px-screen-padding h-16 w-full z-50 bg-surface dark:bg-on-background fixed top-0">
+<div class="flex items-center gap-4">
+<button class="p-2 -ml-2 rounded-full hover:bg-surface-variant/50 transition-colors duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">menu</span>
+</button>
+<h1 class="font-title-md text-title-md text-primary dark:text-primary-fixed">Claude Sonnet</h1>
+</div>
+<button class="p-2 -mr-2 rounded-full hover:bg-surface-variant/50 transition-colors duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">account_circle</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 mb-[156px] flex flex-col items-center justify-center px-screen-padding space-y-stack-gap">
+<!-- Centered Empty State -->
+<div class="flex flex-col items-center text-center max-w-[280px] space-y-4">
+<div class="w-32 h-32 rounded-full overflow-hidden mb-2 ring-4 ring-primary/5 bg-surface-alt">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWw5Nm9VrQQWUA4sxXvAtTV7p-BXbmOFC9TdmwIjJnEMK_D7Mf95mZHi7pmrXDfm0OpoLMLB5hJjIlBE7c5Ogzz8_iOzXL1dp3HRyIAsPEtN1c15DY25_wI1TIHnasnJ0Ajr0VAxvXjy0_qCp_MD1A_nsGcw5xqnpNQHU2RHW9aWK8GqjcpUVIdRPllmtxPsH37zOCWLNxfVk0H29m8OLuIXBwgPUsk-lNECn8kwDqxVyRT66aKRiDGikYIeNjf190JqsIstrwzM4"/>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Ask anything</h2>
+<p class="font-body-md text-body-md text-text-secondary leading-relaxed">
+                Start a conversation, responses stream in real time.
+            </p>
+</div>
+<!-- Suggestion Prompt Chips -->
+<div class="w-full max-w-sm flex flex-col gap-3 mt-4">
+<button class="flex items-center justify-between px-4 py-3 bg-[#EDEBFF] rounded-[12px] text-primary transition-transform active:scale-95 group">
+<span class="font-title-md text-left">Summarize an article</span>
+<span class="material-symbols-outlined text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</button>
+<button class="flex items-center justify-between px-4 py-3 bg-[#EDEBFF] rounded-[12px] text-primary transition-transform active:scale-95 group">
+<span class="font-title-md text-left">Write Kotlin code</span>
+<span class="material-symbols-outlined text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</button>
+<button class="flex items-center justify-between px-4 py-3 bg-[#EDEBFF] rounded-[12px] text-primary transition-transform active:scale-95 group">
+<span class="font-title-md text-left">Explain SSE streaming</span>
+<span class="material-symbols-outlined text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Fixed Input & Nav Area -->
+<div class="fixed bottom-0 left-0 w-full z-40 bg-surface">
+<!-- Message Bar (Custom) -->
+<div class="px-screen-padding pb-4">
+<div class="flex items-center bg-surface-alt rounded-full h-[56px] px-2 ambient-shadow group focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-text-secondary px-4 font-body-md" id="chat-input" placeholder="Message" type="text"/>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-on-primary transition-all duration-200 active:scale-90 disabled:opacity-50 disabled:scale-100" id="send-button">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 600;">arrow_upward</span>
+</button>
+</div>
+</div>
+<!-- BottomNavBar (Based on Shared Components JSON) -->
+<nav class="flex justify-around items-center h-[72px] px-4 pb-safe bg-surface dark:bg-on-background shadow-[0_-2px_12px_0px_rgba(0,0,0,0.06)] rounded-t-xl">
+<!-- Active: Chat -->
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed font-semibold hover:opacity-80 scale-95 transition-transform duration-150 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-sm text-label-sm">Chat</span>
+</button>
+<!-- Inactive: History -->
+<button class="flex flex-col items-center justify-center text-text-secondary dark:text-on-secondary-container hover:opacity-80 scale-95 transition-transform duration-150 active:scale-90">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-sm text-label-sm">History</span>
+</button>
+<!-- Inactive: Settings -->
+<button class="flex flex-col items-center justify-center text-text-secondary dark:text-on-secondary-container hover:opacity-80 scale-95 transition-transform duration-150 active:scale-90">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</button>
+</nav>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        const input = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-button');
+        const sendIcon = sendBtn.querySelector('.material-symbols-outlined');
+
+        // Simple state management for the send button
+        input.addEventListener('input', (e) => {
+            if (e.target.value.trim().length > 0) {
+                sendBtn.style.transform = 'scale(1.1)';
+            } else {
+                sendBtn.style.transform = 'scale(1)';
+            }
+        });
+
+        // Demo streaming state toggle
+        let isStreaming = false;
+        sendBtn.addEventListener('click', () => {
+            if (input.value.trim() === '' && !isStreaming) return;
+
+            if (!isStreaming) {
+                // Change to Stop state
+                isStreaming = true;
+                sendIcon.textContent = 'stop';
+                sendBtn.classList.remove('bg-primary');
+                sendBtn.classList.add('bg-error');
+                input.value = '';
+                input.placeholder = 'AI is typing...';
+                input.disabled = true;
+            } else {
+                // Change back to Send state
+                isStreaming = false;
+                sendIcon.textContent = 'arrow_upward';
+                sendBtn.classList.remove('bg-error');
+                sendBtn.classList.add('bg-primary');
+                input.placeholder = 'Message';
+                input.disabled = false;
+                input.focus();
+            }
+        });
+
+        // Keyboard support
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !isStreaming) {
+                sendBtn.click();
+            }
+        });
+    </script>
+</body></html>
