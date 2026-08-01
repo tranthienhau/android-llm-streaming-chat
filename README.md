@@ -1,6 +1,9 @@
 # android-llm-streaming-chat
 
-Native Android LLM streaming chat POC - Kotlin + Jetpack Compose + OkHttp-SSE + Kotlin Flow. Companion to `ios-llm-streaming-chat` for a BrokerBot-style AI chat experience: responses stream in token-by-token over Server-Sent Events, with cancel-in-flight, a conversation history list, and a model/endpoint settings screen.
+Native Android POC in Kotlin + Jetpack Compose. Two things in one app:
+
+1. **LLM streaming chat** - responses stream in token-by-token over Server-Sent Events (OkHttp-sse + Kotlin Flow), with cancel-in-flight, conversation history, and a model/endpoint settings screen. Companion to `ios-llm-streaming-chat`.
+2. **Real-time device sync** - a `Live Sync` tab that discovers a master on the LAN (NSD / mDNS), holds a low-latency WebSocket, measures the clock offset NTP-style, drives a **synced countdown timer**, and survives drops with heartbeats + backoff reconnect - all owned by a **foreground service** so it keeps running for long, continuous sessions.
 
 ![Demo](screenshots/demo.gif)
 
@@ -10,19 +13,33 @@ Native Android LLM streaming chat POC - Kotlin + Jetpack Compose + OkHttp-SSE + 
 |---|---|---|---|
 | ![New chat](screenshots/01-new-chat.png) | ![Streaming](screenshots/02-chat-streaming.png) | ![History](screenshots/03-history.png) | ![Settings](screenshots/04-settings.png) |
 
-## Features
+| Live Sync - connected | Live Sync - reconnecting |
+|---|---|
+| ![Sync connected](screenshots/05-sync-connected.png) | ![Sync reconnecting](screenshots/06-sync-reconnecting.png) |
 
-- **Jetpack Compose UI** - scrolling `LazyColumn` bubble list, IME padding, auto-scroll to the latest token, Material 3 theming with a single violet accent design system.
-- **Token streaming** via `okhttp-sse` wrapped in a `callbackFlow<String>` - cancellation propagates to the underlying `EventSource`, so cancelling the coroutine tears down the socket.
-- **Animated typing indicator** while a message is mid-stream; a square **Stop** button replaces Send to cancel in-flight generation.
-- **SSE parser** handles both OpenAI `choices[0].delta.content` and Anthropic `content_block_delta` framing.
-- **Conversation history** list with title, last-message preview, relative timestamp, and model badge.
-- **Settings** - API endpoint, OpenAI / Anthropic model picker, masked API key, and a theme toggle.
-- **ViewModel + StateFlow** with `collectAsStateWithLifecycle`, cancel-in-flight via `Job.cancel()`.
-- **Demoable offline** - a `FakeStreamClient` streams canned replies word-by-word so the app runs on a simulator with no endpoint or key.
-- **Testable** - `StreamClient` interface stubbed in `ChatViewModelTest` using Turbine.
+## Chat features
+
+- **Jetpack Compose UI** - `LazyColumn` bubble list, IME padding, auto-scroll to the latest token, Material 3 with a single violet accent design system.
+- **Token streaming** via `okhttp-sse` wrapped in a `callbackFlow<String>` - cancellation propagates to the underlying `EventSource`, tearing down the socket.
+- **Animated typing indicator** mid-stream; a square **Stop** button replaces Send to cancel in-flight.
+- **SSE parser** handles both OpenAI `choices[0].delta.content` and Anthropic `content_block_delta`.
+- **History** list and a **Settings** screen (endpoint, OpenAI/Anthropic picker, masked key, theme toggle).
+- **Demoable offline** - `FakeStreamClient` streams canned replies so it runs with no endpoint.
+
+## Real-time sync features
+
+Built to the requirements of a long-running, hardware-connected, multi-device deployment:
+
+- **Local network discovery** - `NsdManager` (mDNS `_brokerbot._tcp`), no hardcoded IPs; `MulticastLock` held while discovering.
+- **Low-latency channel** - OkHttp **WebSocket**, 15s keep-alive ping to detect a dead peer.
+- **Clock synchronization** - NTP-style offset `((t2-t1)+(t3-t4))/2` with round-trip latency; the countdown renders off the master-synced clock, not the local one, so every device shows the same time.
+- **Reliability on unstable networks** - exponential backoff reconnect, event log, and the countdown keeps running on the last synced offset through a drop (see the reconnecting screenshot).
+- **Background service** - a `FOREGROUND_SERVICE_DATA_SYNC` service owns the socket + timer and is `START_STICKY`, so it survives backgrounding and OS restarts for multi-day uptime.
+- **Demoable offline** - `FakeSyncClient` reproduces discover -> connect -> offset -> heartbeats -> drop -> reconnect on a single emulator.
 
 ## Architecture
+
+Chat streaming:
 
 ```mermaid
 flowchart TD
@@ -34,30 +51,36 @@ flowchart TD
     SSE -- callbackFlow of tokens --> VM
     SSE -- HTTP SSE --> EP[(LLM endpoint\nOpenAI / Anthropic)]
     EP -- data: delta frames --> SSE
-    VM -- append token to streaming msg --> A
-    subgraph Nav
-      A --- H[HistoryScreen]
-      A --- S[SettingsScreen]
-    end
 ```
 
-Each token flows: endpoint -> `EventSource.onEvent` -> `decodeToken` (OpenAI/Anthropic shape) -> `trySend` into the `callbackFlow` -> `ChatViewModel.collect` -> append to the streaming `ChatMessage` -> Compose recomposes the bubble.
+Real-time device sync:
+
+```mermaid
+flowchart TD
+    SVC[SyncService\nforeground, START_STICKY] --> SYC{SyncClient}
+    SYC --> WS[WebSocketSyncClient\nNSD + OkHttp WebSocket]
+    SYC --> FS[FakeSyncClient\noffline demo]
+    WS -- discover _brokerbot._tcp --> NSD[(NsdManager / mDNS)]
+    WS -- ws:// low-latency --> M[(Master device\nauthoritative clock)]
+    M -- ping/pong t1..t4 --> WS
+    WS -- offset, rtt, heartbeat --> SVC
+    SVC -- publish SyncState --> BUS[SyncBus StateFlow]
+    BUS --> UI[SyncScreen\nsynced countdown + event log]
+```
+
+Core principle: **authoritative state on the master, offset-synced clocks, idempotent reconnect, foreground service to stay alive.**
 
 ## Stack
 
-- Kotlin 2.0, AGP 8.5, Compose BOM 2024.06, Navigation-less tab host
-- `kotlinx.coroutines.flow`, `kotlinx.serialization`, OkHttp 4.12 + okhttp-sse
+- Kotlin 2.0, AGP 8.5, Compose BOM 2024.06
+- `kotlinx.coroutines.flow`, `kotlinx.serialization`, OkHttp 4.12 + okhttp-sse + WebSocket
+- `android.net.nsd.NsdManager`, foreground service (dataSync)
 - Min SDK 26, target 34
 
-## Wire to a real endpoint
+## Wire to real backends
 
-The demo build uses `FakeStreamClient`. To hit a real backend, swap it in `MainActivity`:
-
-```kotlin
-ChatViewModel(SseStreamClient(endpoint = "https://api.anthropic.com/v1/..."))
-```
-
-Set the `BROKERBOT_API_KEY` env var (added as a Bearer header). The parser already handles OpenAI + Anthropic SSE shapes.
+- **Chat**: swap `FakeStreamClient` for `SseStreamClient(endpoint = "...")` in `MainActivity`; set `BROKERBOT_API_KEY`.
+- **Sync**: swap `FakeSyncClient` for `WebSocketSyncClient(applicationContext)` in `SyncService`; run a master that advertises `_brokerbot._tcp` and answers the ping/pong offset probe.
 
 ## Build
 
