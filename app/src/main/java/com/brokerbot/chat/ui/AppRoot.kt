@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,6 +40,7 @@ import com.brokerbot.chat.viewmodel.ChatViewModel
 enum class Tab(val label: String, val icon: ImageVector) {
     CHAT("Chat", Icons.AutoMirrored.Filled.Chat),
     HISTORY("History", Icons.Default.History),
+    SYNC("Sync", Icons.Default.Sync),
     SETTINGS("Settings", Icons.Default.Settings),
 }
 
@@ -51,6 +53,7 @@ fun AppRoot(viewModel: ChatViewModel, startTab: Tab = Tab.CHAT) {
             when (tab) {
                 Tab.CHAT -> ChatScreen(viewModel)
                 Tab.HISTORY -> HistoryScreen(onNewChat = { tab = Tab.CHAT })
+                Tab.SYNC -> SyncScreen()
                 Tab.SETTINGS -> SettingsScreen()
             }
         }
