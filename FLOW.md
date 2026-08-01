@@ -29,14 +29,26 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 deterministically for capture (no UI driving needed):
 
 ```sh
-# screen = new (default) | chat (seeded streaming) | history | settings
+# screen = new (default) | chat (seeded streaming) | history | sync | settings
 adb shell am start -S -n com.brokerbot.chat/.ui.MainActivity --es screen chat
 adb shell 'sleep 2.5'
 adb exec-out screencap -p > screenshots/02-chat-streaming.png
 ```
 
-The demo build uses `FakeStreamClient`, which streams a canned reply word-by-word, so the
-typing indicator, live token append, and Stop button all animate with no backend.
+The demo build uses `FakeStreamClient` (chat) and `FakeSyncClient` (sync), which reproduce
+the streaming tokens and the discover -> connect -> heartbeat -> drop -> reconnect lifecycle
+with no backend and no second device.
+
+For the sync screenshots, grant the notification permission first (foreground service),
+launch the sync tab, and capture the connected state early and the reconnecting state
+(the fake drops ~11s after connecting):
+
+```sh
+adb shell pm grant com.brokerbot.chat android.permission.POST_NOTIFICATIONS
+adb shell am start -S -n com.brokerbot.chat/.ui.MainActivity --es screen sync
+adb shell 'sleep 4';  adb exec-out screencap -p > screenshots/05-sync-connected.png
+adb shell 'sleep 8';  adb exec-out screencap -p > screenshots/06-sync-reconnecting.png
+```
 
 ## Demo GIF
 
